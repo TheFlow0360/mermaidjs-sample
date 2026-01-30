@@ -21,6 +21,7 @@ erDiagram
     USERS ||--o{ COMMENTS : writes
     POSTS ||--o{ COMMENTS : has
     POSTS ||--o{ TAGS : tagged_with
+    COMMENTS ||--o{ LIKES : has
 
     USERS {
         int user_id PK
@@ -43,6 +44,13 @@ erDiagram
         int user_id FK
         text content
         datetime created_at
+    }
+
+    LIKES {
+        int comment_id PK
+        int post_id FK
+        int user_id FK
+        boolean positive
     }
 
     TAGS {
