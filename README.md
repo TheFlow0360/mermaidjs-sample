@@ -10,30 +10,29 @@ This project demonstrates how to use Mermaid.js for creating:
 - **Advanced diagrams**: C4 systems, git graphs, architecture, mindmaps, user journeys
 - **Complex diagrams**: Large flowcharts, microservices, dependencies, multi-layer systems
 
-Each sample is a self-contained HTML file with embedded Mermaid diagrams and explanations.
+Each sample is a markdown file with embedded Mermaid diagrams, viewable directly on GitHub or through the web viewer. The markdown files are the single source of truth - no duplication between GitHub and the web interface.
 
 ## Quick Start
 
 ### Prerequisites
 - A modern web browser (Chrome, Firefox, Safari, Edge)
-- No build step required - just open HTML files in your browser
+- Python 3 (for local server, usually pre-installed)
+- No build step required - all files are static HTML/CSS/JavaScript
 
 ### Running Locally
 
-#### Option 1: Using Python
+**Option 1: Using Python (Recommended)**
 ```bash
 python3 -m http.server 8000
-# or
-python -m http.server 8000
 ```
 
-#### Option 2: Using npm
+**Option 2: Using Node.js**
 ```bash
-npm start
+npx http-server
 ```
 
-#### Option 3: Direct File Access
-Simply open `index.html` in your web browser:
+**Option 3: Direct File Access**
+Simply open `index.html` in your web browser (no server needed):
 ```bash
 # macOS/Linux
 open index.html
@@ -42,42 +41,53 @@ open index.html
 start index.html
 ```
 
-Then navigate to `http://localhost:8000` (if using a server) or just view the files directly.
+Then navigate to `http://localhost:8000` or `http://localhost:8080`
+
+### Viewing on GitHub
+All markdown samples render automatically with Mermaid diagrams on GitHub. Just browse to the `samples/` directory in this repository!
 
 ## Project Structure
 
 ```
 mermaidjs-sample/
 ├── index.html                      # Main landing page with navigation
-├── package.json                    # Project metadata
+├── sample-viewer.html              # Generic viewer for markdown samples
 ├── README.md                       # This file
 ├── CLAUDE.md                       # Development guide
 ├── styles/
-│   └── main.css                   # Shared styling
+│   └── main.css                   # Shared styling (dark/light mode, responsive)
 ├── samples/
 │   ├── 01-basic/                  # Fundamental diagram types
-│   │   ├── flowchart.html
-│   │   ├── sequence.html
-│   │   └── state.html
+│   │   ├── flowchart.md
+│   │   ├── sequence.md
+│   │   └── state.md
 │   ├── 02-intermediate/           # Real-world applicable diagrams
-│   │   ├── class-diagram.html
-│   │   ├── entity-relationship.html
-│   │   ├── gantt-chart.html
-│   │   └── pie-chart.html
+│   │   ├── class-diagram.md
+│   │   ├── entity-relationship.md
+│   │   ├── gantt-chart.md
+│   │   └── pie-chart.md
 │   ├── 03-advanced/               # Specialized/architectural diagrams
-│   │   ├── c4-system.html
-│   │   ├── git-graph.html
-│   │   ├── architecture.html
-│   │   ├── mindmap.html
-│   │   └── user-journey.html
+│   │   ├── c4-system.md
+│   │   ├── git-graph.md
+│   │   ├── architecture.md
+│   │   ├── mindmap.md
+│   │   └── user-journey.md
 │   └── 04-complex/                # Large diagrams and optimization
-│       ├── large-flowchart.html
-│       ├── microservices.html
-│       ├── dependency-graph.html
-│       └── multi-layer-architecture.html
+│       ├── large-flowchart.md
+│       ├── microservices.md
+│       ├── dependency-graph.md
+│       └── multi-layer-architecture.md
 └── utils/
-    └── mermaid-config.js          # Shared configuration and helpers
+    └── mermaid-config.js          # Configuration and helper functions
 ```
+
+## Key Features: Markdown-First Architecture
+
+- **Single Source of Truth**: All samples are stored as `.md` files
+- **GitHub Native**: Markdown files render automatically with Mermaid diagrams on GitHub
+- **No Duplication**: Same file viewed on GitHub or via the web viewer
+- **Easy Maintenance**: Edit markdown once, updates everywhere
+- **Portable**: Works with any markdown viewer or platform
 
 ## Diagram Categories
 

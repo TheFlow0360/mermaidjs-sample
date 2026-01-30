@@ -1,12 +1,9 @@
 {
   "name": "mermaidjs-sample",
   "version": "1.0.0",
-  "description": "Comprehensive Mermaid.js diagram samples from basic to advanced use cases",
+  "description": "Comprehensive Mermaid.js diagram samples from basic to advanced use cases, with markdown-first architecture viewable on GitHub",
   "license": "MIT",
   "main": "index.html",
-  "scripts": {
-    "start": "python3 -m http.server 8000 || python -m http.server 8000"
-  },
   "keywords": [
     "mermaid",
     "diagrams",
@@ -15,6 +12,11 @@
     "class",
     "architecture",
     "c4",
-    "visualization"
-  ]
+    "visualization",
+    "markdown"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/mermaidjs-sample"
+  }
 }

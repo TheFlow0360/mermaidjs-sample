@@ -4,98 +4,119 @@ This guide is for developers using Claude Code to work with the Mermaid.js sampl
 
 ## Project Overview
 
-The Mermaid.js sample project is a comprehensive collection of diagram examples showcasing various Mermaid diagram types and patterns. Each sample is self-contained in an HTML file with embedded explanations and code snippets.
+The Mermaid.js sample project is a comprehensive collection of diagram examples showcasing various Mermaid diagram types and patterns.
+
+**Architecture: Markdown-First**
+- All samples are stored as markdown (`.md`) files in the `samples/` directory
+- Markdown files render natively on GitHub with Mermaid diagrams
+- A generic `sample-viewer.html` fetches and renders markdown files in a web interface
+- Single source of truth: no duplication between GitHub and web viewer
 
 ## Project Structure
 
 ```
 mermaidjs-sample/
 ├── index.html                 # Main navigation page
-├── samples/
-│   ├── 01-basic/             # 3 files - fundamental diagrams
-│   ├── 02-intermediate/      # 4 files - real-world patterns
-│   ├── 03-advanced/          # 5 files - specialized diagrams
-│   └── 04-complex/           # 4 files - large diagrams
+├── sample-viewer.html         # Generic markdown viewer
+├── samples/                   # All samples as markdown files
+│   ├── 01-basic/             # 3 files - fundamental diagrams (.md files)
+│   ├── 02-intermediate/      # 4 files - real-world patterns (.md files)
+│   ├── 03-advanced/          # 5 files - specialized diagrams (.md files)
+│   └── 04-complex/           # 4 files - large diagrams (.md files)
 ├── styles/main.css           # Shared styling
-├── utils/mermaid-config.js   # Configuration helpers
-└── package.json              # Project metadata
+├── utils/mermaid-config.js   # Configuration and helper functions
+└── package.json              # Project metadata (minimal)
 ```
+
+## Architecture: Markdown-First Design
+
+### Why Markdown?
+
+1. **GitHub Native Rendering**: Mermaid diagrams display directly in markdown files on GitHub
+2. **Single Source of Truth**: One file serves both GitHub and web viewer
+3. **No Duplication**: Changes to samples update everywhere automatically
+4. **Portable**: Works with any markdown viewer, any platform
+5. **Easy Editing**: Just edit `.md` files, no HTML needed
+
+### How It Works
+
+1. **Markdown Storage** (`samples/XX-category/*.md`)
+   - Each sample is a complete markdown file
+   - Includes title, description, key features, and mermaid diagram
+   - Can be viewed raw or rendered
+
+2. **Sample Viewer** (`sample-viewer.html`)
+   - Generic HTML page that reads markdown files
+   - Fetches markdown via query parameter: `sample-viewer.html?path=samples/01-basic/flowchart.md`
+   - Parses markdown and renders HTML
+   - Initializes Mermaid for diagram rendering
+
+3. **Index Navigation** (`index.html`)
+   - Links to samples via sample-viewer with query parameters
+   - No changes needed for GitHub - samples display natively
 
 ## Working with Samples
 
-### Sample HTML Template
+### Sample Markdown Format
 
-Each sample follows this structure:
+Each sample markdown file follows this structure:
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagram Type - Mermaid.js Sample</title>
-    <link rel="stylesheet" href="../../styles/main.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
-    </script>
-</head>
-<body>
-    <div class="container">
-        <a href="../../index.html" class="back-link">Home</a>
-        <header>
-            <h1>Diagram Title</h1>
-            <p>Brief description</p>
-        </header>
-        <main>
-            <div class="sample-container">
-                <!-- Info and code on left -->
-                <div class="sample-info">
-                    <h2>Use Case Title</h2>
-                    <p class="description">Full description...</p>
-                    <div class="key-features">
-                        <h3>Key Features</h3>
-                        <ul>...</ul>
-                    </div>
-                    <div class="key-features">
-                        <h3>Mermaid Syntax</h3>
-                        <div class="sample-code">
-                            <pre>diagram code here</pre>
-                        </div>
-                    </div>
-                </div>
-                <!-- Diagram on right -->
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        actual mermaid diagram
-                    </div>
-                </div>
-            </div>
-        </main>
-        <footer>
-            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
-        </footer>
-    </div>
-</body>
-</html>
+```markdown
+# Diagram Title
+
+Brief one-line description of the diagram.
+
+## Use Case: Scenario Name
+
+Full description of the use case (2-3 sentences). What problem does this diagram solve? When would you use this?
+
+### Key Features
+- Feature 1
+- Feature 2
+- Feature 3
+
+### Sub-section (Optional)
+Additional information about patterns, layout strategies, or special techniques demonstrated.
+
+## Diagram
+
+\`\`\`mermaid
+flowchart TD
+    Start(["Start"])
+    Process["Do Something"]
+    Decision{"Choice?"}
+    End(["End"])
+
+    Start --> Process
+    Process --> Decision
+    Decision -->|Yes| End
+\`\`\`
+
+## Concepts Demonstrated
+
+**Important concepts** explained here. What syntax elements are shown? What patterns?
+
+## Learning Tips
+
+Guidance on when and how to use this diagram type. Best practices and things to avoid.
 ```
 
-### Key HTML Components
+### Markdown Format Details
 
-1. **Breadcrumb Navigation**: `<a href="../../index.html" class="back-link">Home</a>`
-   - Allows navigation back to the main index
+1. **Title** (H1): The diagram name (e.g., "Flowchart", "Sequence Diagram")
+2. **Description**: One-line description after title
+3. **Use Case** (H2): Descriptive scenario name
+4. **Key Features** (H3): Bulleted list of what the diagram shows
+5. **Diagram** (H2): The mermaid code block with triple backticks
+6. **Concepts Demonstrated** (H2): Explanation of syntax elements
+7. **Learning Tips** (H2): When and how to use this diagram type
 
-2. **Header Section**: Diagram title and brief description
-   - Keep descriptions concise (1-2 sentences)
-   - Title should be descriptive (e.g., "User-Server Communication" not just "Sequence Diagram")
+### Key Advantages of Markdown
 
-3. **Two-Column Layout**: `sample-container` grid
-   - Left: Information, description, key features, code example
-   - Right: The actual rendered diagram
-
-4. **Diagram Container**: `diagram-container` with `.mermaid` div
-   - Contains the actual Mermaid diagram syntax
-   - Mermaid.js automatically finds and renders `.mermaid` divs
+- **Renders on GitHub**: No special viewer needed for basic viewing
+- **Parseable**: The sample-viewer.html parses markdown to HTML
+- **Future Proof**: Works with any markdown platform
+- **Single Source**: One file, viewed everywhere the same way
 
 ## Mermaid Syntax Patterns
 
@@ -213,16 +234,16 @@ classDiagram
 
 ## Adding New Samples
 
-### Step 1: Create the HTML File
+### Step 1: Create the Markdown File
 1. Choose the appropriate category directory (`01-basic`, `02-intermediate`, etc.)
-2. Create a new `.html` file with descriptive name (e.g., `state-diagram.html`)
-3. Copy the template structure from an existing sample
-4. Customize the header, description, and key features
+2. Create a new `.md` file with descriptive name (e.g., `state-diagram.md`)
+3. Use the markdown template format provided in the section above
+4. Write clear descriptions and key features
 
 ### Step 2: Add the Mermaid Diagram
-1. Write your Mermaid syntax in the `<div class="mermaid">` section
-2. Include a code example in the `<pre>` tag within the "Mermaid Syntax" section
-3. Test the diagram renders correctly by opening the file in browser
+1. Write your Mermaid syntax in a code block: ` ```mermaid ... ``` `
+2. Test the syntax with [mermaid.live](https://mermaid.live)
+3. Include explanation of concepts and learning tips
 
 ### Step 3: Add Navigation Link
 1. Edit `index.html`
@@ -230,14 +251,21 @@ classDiagram
 3. Add a new `nav-section` div with:
    - Diagram title
    - Brief description
-   - Link to the HTML file
+   - Link to sample-viewer: `sample-viewer.html?path=samples/XX-category/filename.md`
    - Learning summary
 
 ### Step 4: Test and Validate
-1. Open the sample in multiple browsers
-2. Test responsive behavior (resize browser window)
-3. Verify links work correctly
-4. Check dark mode toggle works with the diagram
+1. **View on GitHub**: Push to GitHub and verify markdown renders with diagram
+2. **Test web viewer**: Open `http://localhost:8000` and click the link
+3. **Check responsiveness**: Resize browser window
+4. **Test dark mode**: Toggle theme button
+5. **Verify links**: Check navigation works
+
+### Step 5: No HTML Needed!
+- The markdown file works everywhere
+- GitHub renders it automatically
+- The web viewer fetches and displays it
+- No HTML duplication required
 
 ## Layout Strategies for Complex Diagrams
 

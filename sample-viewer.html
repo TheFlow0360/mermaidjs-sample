@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram Sample - Mermaid.js</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        .markdown-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .markdown-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .markdown-content h2 {
+            grid-column: 1 / -1;
+            margin-top: 0;
+        }
+
+        .markdown-content h3 {
+            grid-column: 1 / -1;
+        }
+
+        .info-section {
+            grid-column: 1;
+        }
+
+        .diagram-section {
+            grid-column: 2;
+            grid-row: 2 / 4;
+        }
+
+        @media (max-width: 1024px) {
+            .diagram-section {
+                grid-column: 1;
+            }
+        }
+
+        .markdown-content h3,
+        .markdown-content h4 {
+            color: var(--accent-color);
+        }
+
+        .markdown-content ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .markdown-content li:before {
+            content: "▸ ";
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .diagram-container h3 {
+            margin-top: 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary-text);
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #f99;
+            border-radius: 6px;
+            padding: 20px;
+            color: #c33;
+            margin: 20px 0;
+        }
+
+        .breadcrumb-nav {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb-nav a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb-nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb-nav">
+            <a href="index.html">← Home</a>
+        </div>
+
+        <header>
+            <h1 id="pageTitle">Loading Diagram...</h1>
+            <p id="pageDescription">Please wait while the diagram loads.</p>
+        </header>
+
+        <main id="content">
+            <div class="loading">Loading diagram sample...</div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+
+    <button class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+
+    <script>
+        /**
+         * Simple Markdown to HTML converter for our sample files
+         */
+        function parseMarkdown(markdown) {
+            let html = markdown;
+
+            // Escape HTML in code blocks first
+            html = html.replace(/```mermaid\n([\s\S]*?)\n```/g, (match, code) => {
+                return `<MERMAID_BLOCK>${code}</MERMAID_BLOCK>`;
+            });
+
+            // Headers
+            html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+            html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>');
+            html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>');
+
+            // Paragraphs
+            html = html.split('\n\n').map(para => {
+                if (para.match(/^<h[1-6]>/) || para.match(/^<ul>/) || para.match(/^<ol>/) || para.match(/^<MERMAID/)) {
+                    return para;
+                }
+                if (para.trim()) {
+                    return `<p>${para}</p>`;
+                }
+                return '';
+            }).join('\n');
+
+            // Unordered lists
+            html = html.replace(/^[\*\-] (.*?)$/gm, '<li>$1</li>');
+            html = html.replace(/(<li>.*?<\/li>)/s, '<ul>$1</ul>');
+            html = html.replace(/<\/ul>\n<ul>/g, '\n');
+
+            // Restore mermaid blocks
+            html = html.replace(/<MERMAID_BLOCK>([\s\S]*?)<\/MERMAID_BLOCK>/g, '<div class="mermaid">$1</div>');
+
+            // Inline code
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+            return html;
+        }
+
+        /**
+         * Extract title and description from markdown
+         */
+        function extractMetadata(markdown) {
+            const titleMatch = markdown.match(/^# (.*?)$/m);
+            const title = titleMatch ? titleMatch[1] : 'Diagram';
+
+            // Find the first paragraph after title (description)
+            const descMatch = markdown.match(/^# .*?\n\n(.*?)$/m);
+            const description = descMatch ? descMatch[1].split('\n')[0] : 'Diagram Sample';
+
+            return { title, description };
+        }
+
+        /**
+         * Load and render markdown file
+         */
+        async function loadSample() {
+            const params = new URLSearchParams(window.location.search);
+            const samplePath = params.get('path');
+
+            if (!samplePath) {
+                document.getElementById('content').innerHTML = '<div class="error">Error: No sample path specified. Use ?path=samples/01-basic/flowchart.md</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch(samplePath);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${samplePath}: ${response.statusText}`);
+                }
+
+                const markdown = await response.text();
+                const { title, description } = extractMetadata(markdown);
+
+                // Update page title and description
+                document.getElementById('pageTitle').textContent = title;
+                document.getElementById('pageDescription').textContent = description;
+                document.title = `${title} - Mermaid.js Sample`;
+
+                // Parse and render markdown
+                const htmlContent = parseMarkdown(markdown);
+                document.getElementById('content').innerHTML = `<div class="markdown-content">${htmlContent}</div>`;
+
+                // Re-initialize mermaid for the newly added content
+                if (typeof mermaid !== 'undefined') {
+                    mermaid.contentLoaded();
+                }
+            } catch (error) {
+                console.error('Error loading sample:', error);
+                document.getElementById('content').innerHTML = `<div class="error"><strong>Error loading sample:</strong> ${error.message}</div>`;
+            }
+        }
+
+        /**
+         * Theme toggle
+         */
+        document.querySelector('.theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('mermaid-theme', isDark ? 'dark' : 'light');
+
+            if (typeof mermaid !== 'undefined') {
+                mermaid.initialize({ theme: isDark ? 'dark' : 'default' });
+            }
+        });
+
+        // Apply saved theme preference
+        if (localStorage.getItem('mermaid-theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Load sample on page load
+        window.addEventListener('DOMContentLoaded', loadSample);
+    </script>
+</body>
+</html>
