@@ -131,9 +131,12 @@
         function parseMarkdown(markdown) {
             let html = markdown;
 
-            // Escape HTML in code blocks first
-            html = html.replace(/```mermaid\n([\s\S]*?)\n```/g, (match, code) => {
-                return `<MERMAID_BLOCK>${code}</MERMAID_BLOCK>`;
+            // Store mermaid blocks first (more flexible regex)
+            const mermaidBlocks = [];
+            html = html.replace(/```mermaid\s*([\s\S]*?)\s*```/g, (match, code) => {
+                const trimmedCode = code.trim();
+                mermaidBlocks.push(trimmedCode);
+                return `__MERMAID_${mermaidBlocks.length - 1}__`;
             });
 
             // Headers
@@ -143,7 +146,7 @@
 
             // Paragraphs
             html = html.split('\n\n').map(para => {
-                if (para.match(/^<h[1-6]>/) || para.match(/^<ul>/) || para.match(/^<ol>/) || para.match(/^<MERMAID/)) {
+                if (para.match(/^<h[1-6]>/) || para.match(/^<ul>/) || para.match(/^<ol>/) || para.match(/__MERMAID_/)) {
                     return para;
                 }
                 if (para.trim()) {
@@ -158,7 +161,9 @@
             html = html.replace(/<\/ul>\n<ul>/g, '\n');
 
             // Restore mermaid blocks
-            html = html.replace(/<MERMAID_BLOCK>([\s\S]*?)<\/MERMAID_BLOCK>/g, '<div class="mermaid">$1</div>');
+            html = html.replace(/__MERMAID_(\d+)__/g, (match, index) => {
+                return `<div class="mermaid">${mermaidBlocks[parseInt(index)]}</div>`;
+            });
 
             // Inline code
             html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
