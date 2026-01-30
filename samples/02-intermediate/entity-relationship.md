@@ -26,6 +26,7 @@ erDiagram
         int user_id PK
         string email UK
         string name
+        int year of birth
         datetime created_at
     }
 
