@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Graph - Mermaid.js Sample</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">Home</a>
+
+        <header>
+            <h1>Git Graph</h1>
+            <p>Git branch history and merge workflow visualization</p>
+        </header>
+
+        <main>
+            <div class="sample-container">
+                <div class="sample-info">
+                    <h2>Feature Development Workflow</h2>
+                    <p class="description">
+                        This git graph visualizes a typical feature branch workflow showing commits, branches, and merges. It demonstrates how teams organize their development using branch strategies like Git Flow, making it easy to understand the project's version control history.
+                    </p>
+
+                    <div class="key-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Commit history visualization</li>
+                            <li>Branch creation and merging</li>
+                            <li>Tagged releases</li>
+                            <li>Parallel development</li>
+                            <li>Merge conflict resolution</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-features">
+                        <h3>Mermaid Syntax</h3>
+                        <div class="sample-code">
+                            <pre>gitGraph
+    commit id: "Initial"
+    commit id: "Add auth"
+    branch develop
+    commit id: "Dev setup"
+    branch feature/user-profile
+    commit id: "Add form"
+    commit id: "Add validation"
+    checkout develop
+    merge feature/user-profile
+    commit id: "Merge features"
+    checkout main
+    merge develop tag: "v1.0"</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        gitGraph
+                            commit id: "Initial commit"
+                            commit id: "Setup project"
+
+                            branch develop
+                            commit id: "Dev environment"
+
+                            branch feature/auth
+                            commit id: "Add login form"
+                            commit id: "Add validation"
+                            commit id: "Add JWT tokens"
+
+                            checkout develop
+                            merge feature/auth
+
+                            branch feature/profile
+                            commit id: "User profile UI"
+                            commit id: "Profile API"
+
+                            checkout develop
+                            merge feature/profile
+                            commit id: "Release prep"
+
+                            checkout main
+                            merge develop tag: "v1.0.0"
+                            commit id: "Hotfix readme"
+
+                            checkout develop
+                            merge main
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+</body>
+</html>

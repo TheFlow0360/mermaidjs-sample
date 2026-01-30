@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindmap - Mermaid.js Sample</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">Home</a>
+
+        <header>
+            <h1>Mindmap</h1>
+            <p>Hierarchical knowledge map and brainstorming visualization</p>
+        </header>
+
+        <main>
+            <div class="sample-container">
+                <div class="sample-info">
+                    <h2>Web Application Development</h2>
+                    <p class="description">
+                        Mindmaps are excellent for brainstorming, knowledge organization, and hierarchical information display. This example shows a complete web development project broken down into major categories, subcategories, and specific tasks, making it easy to understand the full scope.
+                    </p>
+
+                    <div class="key-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Hierarchical organization</li>
+                            <li>Central concept with branches</li>
+                            <li>Multi-level nesting</li>
+                            <li>Easy visual scanning</li>
+                            <li>Natural brainstorming format</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-features">
+                        <h3>Mermaid Syntax</h3>
+                        <div class="sample-code">
+                            <pre>mindmap
+    root((Web Dev))
+        Frontend
+            React
+            Styling
+                CSS
+                Tailwind
+        Backend
+            Node.js
+            Database
+        DevOps
+            Docker
+            CI/CD</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        mindmap
+                            root((Web App<br/>Development))
+                                Frontend
+                                    Frameworks
+                                        React
+                                        Vue
+                                        Angular
+                                    Styling
+                                        CSS
+                                        Tailwind
+                                        SASS
+                                    Build Tools
+                                        Webpack
+                                        Vite
+                                Backend
+                                    Languages
+                                        Node.js
+                                        Python
+                                        Go
+                                    Databases
+                                        PostgreSQL
+                                        MongoDB
+                                        Redis
+                                    APIs
+                                        REST
+                                        GraphQL
+                                DevOps
+                                    Containerization
+                                        Docker
+                                        Kubernetes
+                                    CI/CD
+                                        GitHub Actions
+                                        Jenkins
+                                    Monitoring
+                                        Logs
+                                        Metrics
+                                Testing
+                                    Unit Tests
+                                        Jest
+                                        Vitest
+                                    Integration
+                                        Cypress
+                                        Selenium
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+</body>
+</html>

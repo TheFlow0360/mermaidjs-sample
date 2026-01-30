@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C4 System Diagram - Mermaid.js Sample</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">Home</a>
+
+        <header>
+            <h1>C4 System Diagram</h1>
+            <p>High-level system architecture and context diagram</p>
+        </header>
+
+        <main>
+            <div class="sample-container">
+                <div class="sample-info">
+                    <h2>E-Commerce Platform Architecture</h2>
+                    <p class="description">
+                        The C4 model provides four levels of abstraction for visualizing software systems. This diagram shows the System Context level - how your system fits into the broader environment, showing external users and systems it interacts with.
+                    </p>
+
+                    <div class="key-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>System context overview</li>
+                            <li>External actors and systems</li>
+                            <li>High-level interactions</li>
+                            <li>System boundaries</li>
+                            <li>Relationship descriptions</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-features">
+                        <h3>Mermaid Syntax</h3>
+                        <div class="sample-code">
+                            <pre>C4Context
+    title E-Commerce System Context
+
+    Person(customer, "Customer", "Browse and purchase")
+    System(ecom, "E-Commerce", "Online shopping")
+    System_Ext(payment, "Payment Gateway")
+    System_Ext(email, "Email Service")
+
+    Rel(customer, ecom, "Uses")
+    Rel(ecom, payment, "Processes")
+    Rel(ecom, email, "Sends notifications")</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        C4Context
+                            title E-Commerce Platform - System Context
+
+                            Person(customer, "Customer", "Browses products\nand purchases items")
+                            Person(admin, "Admin", "Manages inventory\nand orders")
+
+                            System(ecom, "E-Commerce Platform", "Provides online shopping\ncapabilities")
+                            System_Ext(payment, "Payment Gateway", "Processes credit card\nand digital payments")
+                            System_Ext(email, "Email Service", "Sends order confirmations\nand notifications")
+                            System_Ext(shipping, "Shipping Provider", "Tracks shipments\nand delivery")
+
+                            Rel(customer, ecom, "Uses website/app")
+                            Rel(admin, ecom, "Manages system")
+                            Rel(ecom, payment, "Initiates payments")
+                            Rel(ecom, email, "Sends notifications")
+                            Rel(ecom, shipping, "Requests shipments")
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+</body>
+</html>

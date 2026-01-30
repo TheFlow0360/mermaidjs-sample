@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Diagram - Mermaid.js Sample</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">Home</a>
+
+        <header>
+            <h1>Class Diagram</h1>
+            <p>Object-oriented design with inheritance and composition relationships</p>
+        </header>
+
+        <main>
+            <div class="sample-container">
+                <div class="sample-info">
+                    <h2>Vehicle Inheritance Hierarchy</h2>
+                    <p class="description">
+                        This class diagram demonstrates object-oriented design patterns including inheritance, composition, and method/property definitions. It shows a vehicle management system with abstract base classes and concrete implementations.
+                    </p>
+
+                    <div class="key-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Classes with attributes and methods</li>
+                            <li>Inheritance relationships (is-a)</li>
+                            <li>Composition relationships (has-a)</li>
+                            <li>Visibility modifiers (+, -, #)</li>
+                            <li>Method signatures with types</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-features">
+                        <h3>Mermaid Syntax</h3>
+                        <div class="sample-code">
+                            <pre>classDiagram
+    class Vehicle {
+        -String color
+        -Float speed
+        +start()
+        +stop()
+    }
+
+    class Car {
+        -Int doors
+        +openDoor()
+    }
+
+    class Motorcycle {
+        -Bool sidecar
+    }
+
+    Vehicle <|-- Car
+    Vehicle <|-- Motorcycle</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        classDiagram
+                            class Vehicle {
+                                -String color
+                                -Float speed
+                                +start()
+                                +stop()
+                            }
+
+                            class Car {
+                                -Int doors
+                                +openDoor()
+                            }
+
+                            class Motorcycle {
+                                -Bool sidecar
+                                +toggleSidecar()
+                            }
+
+                            Vehicle <|-- Car
+                            Vehicle <|-- Motorcycle
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+</body>
+</html>

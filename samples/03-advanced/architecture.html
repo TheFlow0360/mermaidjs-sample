@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture - Mermaid.js Sample</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">Home</a>
+
+        <header>
+            <h1>System Architecture</h1>
+            <p>Component-based system design with dependencies</p>
+        </header>
+
+        <main>
+            <div class="sample-container">
+                <div class="sample-info">
+                    <h2>Microservices Architecture</h2>
+                    <p class="description">
+                        This architecture diagram shows how different services and components interact in a modern application. It visualizes the layered structure with presentation, business logic, and data layers, showing clear separation of concerns and service boundaries.
+                    </p>
+
+                    <div class="key-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Component grouping and organization</li>
+                            <li>Layered architecture representation</li>
+                            <li>Service interactions</li>
+                            <li>External integrations</li>
+                            <li>Data flow patterns</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-features">
+                        <h3>Mermaid Syntax</h3>
+                        <div class="sample-code">
+                            <pre>graph TB
+    subgraph Client Layer
+        Web[Web App]
+        Mobile[Mobile App]
+    end
+
+    subgraph API Gateway
+        Gateway[API Gateway]
+    end
+
+    subgraph Services
+        Auth[Auth Service]
+        User[User Service]
+        Order[Order Service]
+    end
+
+    subgraph Data Layer
+        UserDB[(User DB)]
+        OrderDB[(Order DB)]
+    end
+
+    Web --> Gateway
+    Mobile --> Gateway
+    Gateway --> Auth
+    Gateway --> User
+    Gateway --> Order
+    User --> UserDB
+    Order --> OrderDB</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph TB
+                            subgraph Client["Client Layer"]
+                                Web["🌐 Web App"]
+                                Mobile["📱 Mobile App"]
+                                Desktop["💻 Desktop"]
+                            end
+
+                            subgraph Gateway["API Gateway Layer"]
+                                APIGw["API Gateway<br/>(Load Balancer)"]
+                                Cache["Cache Layer<br/>(Redis)"]
+                            end
+
+                            subgraph Services["Microservices"]
+                                Auth["🔐 Auth Service<br/>JWT/OAuth"]
+                                User["👤 User Service<br/>Profiles & Settings"]
+                                Order["🛒 Order Service<br/>Shopping & Checkout"]
+                                Payment["💳 Payment Service<br/>Transactions"]
+                            end
+
+                            subgraph Data["Data Layer"]
+                                UserDB[("👥 User DB<br/>PostgreSQL")]
+                                OrderDB[("📦 Order DB<br/>PostgreSQL")]
+                                PaymentDB[("💰 Payment DB<br/>PostgreSQL")]
+                            end
+
+                            subgraph External["External Services"]
+                                EmailSvc["📧 Email Service"]
+                                PaymentGw["💳 Payment Gateway"]
+                            end
+
+                            Web --> APIGw
+                            Mobile --> APIGw
+                            Desktop --> APIGw
+
+                            APIGw --> Cache
+                            Cache --> Auth
+                            Cache --> User
+                            Cache --> Order
+                            Cache --> Payment
+
+                            Auth --> UserDB
+                            User --> UserDB
+                            Order --> OrderDB
+                            Payment --> PaymentDB
+
+                            Payment --> PaymentGw
+                            Order --> EmailSvc
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+</body>
+</html>

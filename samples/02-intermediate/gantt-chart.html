@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart - Mermaid.js Sample</title>
+    <link rel="stylesheet" href="../../styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-link">Home</a>
+
+        <header>
+            <h1>Gantt Chart</h1>
+            <p>Project timeline with task dependencies and milestones</p>
+        </header>
+
+        <main>
+            <div class="sample-container">
+                <div class="sample-info">
+                    <h2>Website Redesign Project</h2>
+                    <p class="description">
+                        This Gantt chart visualizes a software project timeline showing tasks, their duration, dependencies, and critical path. It's useful for project planning, resource allocation, and tracking progress across multiple phases.
+                    </p>
+
+                    <div class="key-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Time-based task scheduling</li>
+                            <li>Task dependencies and sequencing</li>
+                            <li>Milestone markers</li>
+                            <li>Parallel and sequential tasks</li>
+                            <li>Duration visualization</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-features">
+                        <h3>Mermaid Syntax</h3>
+                        <div class="sample-code">
+                            <pre>gantt
+    title Website Redesign
+    dateFormat YYYY-MM-DD
+
+    section Planning
+    Requirements :req, 2024-01-01, 14d
+    Design Review :des, 2024-01-15, 10d
+
+    section Development
+    Frontend :fe, after des, 20d
+    Backend :be, after des, 25d
+
+    section Testing
+    QA :qa, after fe be, 15d
+    Launch :milestone, after qa, 1d</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        gantt
+                            title Website Redesign Project
+                            dateFormat YYYY-MM-DD
+
+                            section Planning
+                            Requirements :req, 2024-01-01, 14d
+                            Design Review :des, after req, 10d
+
+                            section Development
+                            Frontend Development :fe, after des, 20d
+                            Backend Development :be, after des, 25d
+                            Database Setup :db, after des, 15d
+
+                            section Testing
+                            Quality Assurance :qa, after fe be db, 15d
+                            User Acceptance Testing :uat, after qa, 10d
+
+                            section Launch
+                            Deployment :milestone, after uat, 1d
+                            Post-Launch Support :sup, after uat, 14d
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Mermaid.js Sample Project | <a href="https://mermaid.js.org" target="_blank">Mermaid Documentation</a></p>
+        </footer>
+    </div>
+</body>
+</html>
